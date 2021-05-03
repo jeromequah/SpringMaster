@@ -13,6 +13,7 @@ public class Admin {
     private final String email;
     private final LocalDate dob;
     private final String mobileNumber;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Allows sending password and not reading it
     private final String password;
 
     // Admin - Constructor
