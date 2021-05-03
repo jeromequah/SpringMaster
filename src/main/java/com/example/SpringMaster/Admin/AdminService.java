@@ -1,5 +1,6 @@
 package com.example.SpringMaster.Admin;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class AdminService {
     private final AdminRepo adminRepo;
 
     // Constructor for Admin Repo
+    @Autowired
     public AdminService(AdminRepo adminRepo) {
         this.adminRepo = adminRepo;
     }
