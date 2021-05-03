@@ -26,7 +26,7 @@ public class Admin {
     }
     // Admin - Getters
 
-    @JsonProperty("customerID") // changes id label to customer ID
+    @JsonProperty("adminId") // changes id label to customer ID
     public long getId() {
         return id;
     }

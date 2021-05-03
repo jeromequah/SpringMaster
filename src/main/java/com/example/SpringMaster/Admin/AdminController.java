@@ -1,8 +1,7 @@
 package com.example.SpringMaster.Admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +19,24 @@ public class AdminController {
 
     @GetMapping
     List<Admin> getAdmin() {
+        System.out.println("GET REQUEST...");
         return adminService.getAdmin();
+    }
+
+    @PostMapping
+    void createNewAdmin(@RequestBody Admin admin) {
+        System.out.println("POST REQUEST...");
+        System.out.println(admin);
+    }
+
+    @PutMapping
+    void updateAdmin(@RequestBody Admin admin) {
+        System.out.println("UPDATE REQUEST...");
+        System.out.println(admin);
+    }
+
+    @DeleteMapping(path = "{adminId}")
+    void deleteAdmin(@PathVariable("adminId") Long id) {
+        System.out.println("DELETE REQUEST...");
     }
 }
