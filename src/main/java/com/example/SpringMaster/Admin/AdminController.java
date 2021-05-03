@@ -1,23 +1,23 @@
 package com.example.SpringMaster.Admin;
 
-import com.example.SpringMaster.SpringMasterApplication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDate;
-import java.time.Month;
 
 // Admin - REST Layer
 @RestController
 public class AdminController {
+
+    private final AdminService adminService; // immutability
+
+    // AdminService Constructor
+    @Autowired // Injects adminService to AdminController
+    public AdminController(AdminService adminService) {
+        this.adminService = adminService;
+    }
+
     @GetMapping
     Admin getAdmin() {
-        return new Admin(
-                1,
-                "Jerome Quah Wei Ren",
-                "jeromequah123@msn.com",
-                LocalDate.of(1997, Month.MARCH,28),
-                "98765432",
-                "password");
+        return adminService.getAdmin();
     }
 }
