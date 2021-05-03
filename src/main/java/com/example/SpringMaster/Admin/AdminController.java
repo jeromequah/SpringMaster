@@ -3,6 +3,7 @@ package com.example.SpringMaster.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 // Admin - REST Layer
@@ -33,7 +34,8 @@ public class AdminController {
     }
 
     @PostMapping(path = "post")
-    void createNewAdmin(@RequestBody Admin admin) {
+    void createNewAdmin(@Valid // Invokes NotBlank for Admin Class
+                        @RequestBody Admin admin) {
         System.out.println("POST REQUEST...");
         System.out.println(admin);
     }

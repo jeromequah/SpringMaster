@@ -3,16 +3,20 @@ package com.example.SpringMaster.Admin;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 // Admin - Class
 public class Admin {
     // Class properties
     private final long id;
+    @NotBlank // Cannot be empty
     private final String fullName;
     private final String email;
     private final LocalDate dob;
     private final String mobileNumber;
+
+    @NotBlank
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Allows sending password and not reading it
     private final String password;
 
