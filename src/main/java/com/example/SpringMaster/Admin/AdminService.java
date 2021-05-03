@@ -30,6 +30,6 @@ public class AdminService {
         return getAdmins()
                 .stream().filter(admin -> admin.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Admin Not Found"));
+                .orElseThrow(() -> new IllegalStateException("Admin with id " + id + " Not Found"));
     }
 }
