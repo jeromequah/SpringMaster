@@ -1,5 +1,7 @@
 package com.example.SpringMaster.Admin;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,7 +15,10 @@ public class AdminService {
     private final AdminRepo adminRepo;
 
     // Constructor for Admin Repo
-    public AdminService(AdminRepo adminRepo) {
+    @Autowired // Will return the @Primary Component
+    public AdminService(
+            //@Qualifier("fake") // @Qualifier allows selection of specific @Component of the same Class
+                    AdminRepo adminRepo) {
         this.adminRepo = adminRepo;
     }
 
