@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AdminConfig {
 
-    @Value("${app.useFakeAdminRepo:false}") // default will be false for this variable
+    @Value("${app.useFakeAdminRepo:true}") // default will be false for this variable
     private Boolean useFakeAdminRepo;
 
     @Bean // Initialises Spring, any code in args will be executed

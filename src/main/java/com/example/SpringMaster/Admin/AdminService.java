@@ -1,5 +1,6 @@
 package com.example.SpringMaster.Admin;
 
+import com.example.SpringMaster.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -30,6 +31,6 @@ public class AdminService {
         return getAdmins()
                 .stream().filter(admin -> admin.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Admin with id " + id + " Not Found"));
+                .orElseThrow(() -> new NotFoundException("Admin with id " + id + " Not Found"));
     }
 }

@@ -1,5 +1,6 @@
 package com.example.SpringMaster.Admin;
 
+import com.example.SpringMaster.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,14 @@ public class AdminController {
     Admin getAdmin(@PathVariable("adminId") Long id) {
         System.out.println("GET REQUEST...");
         return adminService.getAdmin(id);
+    }
+
+    // GET SINGLE Admin Details Exception
+    @GetMapping(path ="{adminId}/exception")
+    Admin getAdminException(@PathVariable("adminId") Long id) {
+        throw new ApiRequestException(
+                "ApiRequestException for Admin " + id
+        );
     }
 
     @PostMapping(path = "post")
