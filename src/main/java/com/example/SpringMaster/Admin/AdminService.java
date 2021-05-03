@@ -22,7 +22,14 @@ public class AdminService {
         this.adminRepo = adminRepo;
     }
 
-    List<Admin> getAdmin() {
+    List<Admin> getAdmins() {
         return adminRepo.getAdmins();
+    }
+
+    Admin getAdmin(Long id) {
+        return getAdmins()
+                .stream().filter(admin -> admin.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Admin Not Found"));
     }
 }

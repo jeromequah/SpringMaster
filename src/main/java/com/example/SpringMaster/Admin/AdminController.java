@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 // Admin - REST Layer
+@RequestMapping(path = "api/v1/admins")
 @RestController
 public class AdminController {
 
@@ -17,26 +18,34 @@ public class AdminController {
         this.adminService = adminService;
     }
 
+    // GET All Admin Details
     @GetMapping
-    List<Admin> getAdmin() {
+    List<Admin> getAdmins() {
         System.out.println("GET REQUEST...");
-        return adminService.getAdmin();
+        return adminService.getAdmins();
     }
 
-    @PostMapping
+    // GET SINGLE Admin Details
+    @GetMapping(path ="{adminId}")
+    Admin getAdmin(@PathVariable("adminId") Long id) {
+        System.out.println("GET REQUEST...");
+        return adminService.getAdmin(id);
+    }
+
+    @PostMapping(path = "post")
     void createNewAdmin(@RequestBody Admin admin) {
         System.out.println("POST REQUEST...");
         System.out.println(admin);
     }
 
-    @PutMapping
+    @PutMapping(path = "update")
     void updateAdmin(@RequestBody Admin admin) {
         System.out.println("UPDATE REQUEST...");
         System.out.println(admin);
     }
 
-    @DeleteMapping(path = "{adminId}")
+    @DeleteMapping(path = "delete/{adminId}")
     void deleteAdmin(@PathVariable("adminId") Long id) {
-        System.out.println("DELETE REQUEST...");
+        System.out.println("DELETE REQUEST WITH ADMIN ID = " + id);
     }
 }
