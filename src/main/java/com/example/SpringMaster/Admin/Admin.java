@@ -3,6 +3,7 @@ package com.example.SpringMaster.Admin;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
@@ -10,13 +11,18 @@ import java.time.LocalDate;
 public class Admin {
     // Class properties
     private final long id;
-    @NotBlank // Cannot be empty
+
+    @NotBlank(message = "Full Name must be not empty") // Cannot be empty
     private final String fullName;
+
+    @NotBlank(message = "Email must be not empty")
+    @Email // Email Validation
     private final String email;
+
     private final LocalDate dob;
     private final String mobileNumber;
 
-    @NotBlank
+    @NotBlank(message = "Password must be not empty")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Allows sending password and not reading it
     private final String password;
 
