@@ -2,11 +2,8 @@ package com.example.SpringMaster.Admin;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
@@ -19,6 +16,15 @@ public class Admin {
     // Class properties
 
     @Id
+    @SequenceGenerator(
+            name = "admin_sequence",
+            sequenceName = "admin_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "admin_sequence"
+    )
     private long id;
 
     @NotBlank(message = "Full Name must be not empty") // Cannot be empty
