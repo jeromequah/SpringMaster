@@ -11,7 +11,7 @@ import java.time.Month;
 
 // this must be present in main class, if not app will not start
 @SpringBootApplication
-@EnableFeignClients // enable clients
+@EnableFeignClients // enable to consume data from other available APIs
 public class SpringMasterApplication {
 
 	public static void main(String[] args) {
