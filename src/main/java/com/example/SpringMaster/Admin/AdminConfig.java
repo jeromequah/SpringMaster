@@ -23,9 +23,6 @@ public class AdminConfig {
     @Bean
     AdminRepo adminRepo() {
         System.out.println("useFakeAdminRepo = " + useFakeAdminRepo);
-        return useFakeAdminRepo ?
-                new AdminFakeRepository() : // return fake if variable is TRUE
-                new AdminRepository(); // else return the repo
-
+        return new AdminFakeRepository(); // return fake if variable is TRUE
     }
 }

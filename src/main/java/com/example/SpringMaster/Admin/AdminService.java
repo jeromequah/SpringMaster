@@ -2,7 +2,6 @@ package com.example.SpringMaster.Admin;
 
 import com.example.SpringMaster.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,24 +12,24 @@ import java.util.List;
 public class AdminService {
 
     // Reference to Admin - DATA ACCESS Layer via Interface
-    private final AdminRepo adminRepo;
+    private final AdminRepository adminRepository;
 
     // Constructor for Admin Repo
     @Autowired
     public AdminService(
 //            @Qualifier("fake") Annotation for using FakeRepository as its value = "fake"
-                    AdminRepo adminRepo) {
-        this.adminRepo = adminRepo;
+                    AdminRepository adminRepository) {
+        this.adminRepository = adminRepository;
     }
 
     List<Admin> getAdmins() {
-        return adminRepo.getAdmins();
+        return adminRepository.findAll();
     }
 
     Admin getAdmin(Long id) {
-        return getAdmins()
-                .stream().filter(admin -> admin.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new NotFoundException("Admin with id " + id + " Not Found"));
+        return adminRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new NotFoundException("Admin with id " + id + " Not Found"));
     }
 }
