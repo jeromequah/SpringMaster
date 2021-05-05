@@ -8,10 +8,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AdminConfig {
 
-    @Value("${app.useFakeAdminRepo:true}") // default will be false for this variable
+    @Value("${app.useFakeAdminRepo:false}") // default will be false for this variable
     private Boolean useFakeAdminRepo;
 
-    @Bean // Initialises Spring, any code in args will be executed
+    @Bean
+        // Initialises Spring, any code in args will be executed
     CommandLineRunner commandLineRunner() { // used upon App start
         return args -> {
             System.out.println("Command line runner yay");
