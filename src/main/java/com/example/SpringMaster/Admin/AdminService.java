@@ -34,15 +34,15 @@ public class AdminService {
         return adminRepository.findAll();
     }
 
-    Admin getAdmin(Long id) {
-        return adminRepository
-                .findById(id)
-                .orElseThrow(
-                        () -> {
-                            NotFoundException notFoundException = new NotFoundException(
-                                    "Admin with id " + id + " Not Found");
-                            LOGGER.error("Error for admin {}", id, notFoundException);
-                            return notFoundException;
-                        });
+    Admin getAdmin(String email) {
+        return adminRepository.findByEmail(email);
     }
 }
+//                .orElseThrow(
+//                        () -> {
+//                            NotFoundException notFoundException = new NotFoundException(
+//                                    "Admin with id " + id + " Not Found");
+//                            LOGGER.error("Error for admin {}", id, notFoundException);
+//                            return notFoundException;
+
+

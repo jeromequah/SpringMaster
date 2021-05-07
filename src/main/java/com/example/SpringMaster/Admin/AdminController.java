@@ -28,10 +28,10 @@ public class AdminController {
     }
 
     // GET SINGLE Admin Details
-    @GetMapping(path ="{adminId}")
-    Admin getAdmin(@PathVariable("adminId") Long id) {
+    @GetMapping(path ="{adminEmail}")
+    Admin getAdmin(@PathVariable("adminEmail") String email) {
         System.out.println("GET REQUEST...");
-        return adminService.getAdmin(id);
+        return adminService.getAdmin(email);
     }
 
     // GET SINGLE Admin Details Exception
