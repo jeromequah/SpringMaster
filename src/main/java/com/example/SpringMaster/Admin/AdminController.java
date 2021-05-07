@@ -21,7 +21,7 @@ public class AdminController {
     }
 
     // GET All Admin Details
-    @GetMapping
+    @GetMapping(path = "allAdmin")
     List<Admin> getAdmins() {
         System.out.println("GET REQUEST...");
         return adminService.getAdmins();
