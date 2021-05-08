@@ -2,6 +2,8 @@ package com.example.SpringMaster.Admin;
 
 import com.example.SpringMaster.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,11 +44,21 @@ public class AdminController {
         );
     }
 
-    @PostMapping(path = "post")
-    void createNewAdmin(@Valid // Invokes NotBlank for Admin Class
+    @PostMapping(path = "createAdmin"
+//            consumes = {
+//                    MediaType.APPLICATION_XML_VALUE,
+//                    MediaType.APPLICATION_JSON_VALUE
+//            },
+//            produces = {
+//            MediaType.APPLICATION_XML_VALUE,
+//            MediaType.APPLICATION_JSON_VALUE
+//    }
+    )
+    Admin createAdmin(@Valid // Invokes NotBlank for Admin Class
                         @RequestBody Admin admin) {
         System.out.println("POST REQUEST...");
         System.out.println(admin);
+        return adminService.createAdmin(admin);
     }
 
     @PutMapping(path = "update")

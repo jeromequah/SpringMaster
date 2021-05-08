@@ -31,10 +31,10 @@ public class AdminConfig {
         };
     }
 
-    // Config for adminRepo implementation instead of @Qualifier
-    @Bean
-    AdminRepo adminRepo() {
-        System.out.println("useFakeAdminRepo = " + useFakeAdminRepo);
-        return new AdminFakeRepository(); // return fake if variable is TRUE
-    }
+//    // Config for adminRepo implementation instead of @Qualifier
+//    @Bean
+//    AdminRepo adminRepo() {
+//        System.out.println("useFakeAdminRepo = " + useFakeAdminRepo);
+//        return new AdminFakeRepository(); // return fake if variable is TRUE
+//    }
 }

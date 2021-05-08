@@ -37,6 +37,12 @@ public class AdminService {
     Admin getAdmin(String email) {
         return adminRepository.findByEmail(email);
     }
+
+    Admin createAdmin(Admin newAdmin) {
+        // TODO post new admin to postgres DB
+        adminRepository.save(newAdmin);
+        return newAdmin;
+    }
 }
 //                .orElseThrow(
 //                        () -> {
