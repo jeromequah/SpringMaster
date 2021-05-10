@@ -39,7 +39,6 @@ public class AdminService {
     }
 
     Admin createAdmin(Admin newAdmin) {
-        // TODO post new admin to postgres DB
         adminRepository.save(newAdmin);
         return newAdmin;
     }

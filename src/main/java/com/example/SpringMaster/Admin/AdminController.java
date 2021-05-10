@@ -2,6 +2,8 @@ package com.example.SpringMaster.Admin;
 
 import com.example.SpringMaster.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +32,8 @@ public class AdminController {
     }
 
     // GET SINGLE Admin Details
-    @GetMapping(path ="{adminEmail}")
-    Admin getAdmin(@PathVariable("adminEmail") String email) {
+    @GetMapping(path ="getAdminDetails")
+    Admin getAdmin(@Param("email") String email) {
         System.out.println("GET REQUEST...");
         return adminService.getAdmin(email);
     }
