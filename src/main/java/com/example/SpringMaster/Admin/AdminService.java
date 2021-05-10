@@ -5,6 +5,7 @@ import org.hibernate.annotations.common.util.impl.Log_$logger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -35,7 +36,12 @@ public class AdminService {
     }
 
     Admin getAdmin(String email) {
-        return adminRepository.findByEmail(email);
+        Admin admin = adminRepository.findByEmail(email);
+        if (admin!=null) {
+            return admin;
+        } else {
+            return new Admin();
+        }
     }
 
     Admin createAdmin(Admin newAdmin) {
