@@ -1,6 +1,7 @@
 package com.example.SpringMaster.Admin;
 
 import com.example.SpringMaster.exception.ApiRequestException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,15 +15,19 @@ import java.util.List;
 // Admin - REST Layer
 @RequestMapping(path = "api/v1/admins")
 @RestController
+
+// lombok
+@AllArgsConstructor
+
 public class AdminController {
 
     private final AdminService adminService; // immutability
 
-    // AdminService Constructor
-    @Autowired // Injects adminService to AdminController
-    public AdminController(AdminService adminService) {
-        this.adminService = adminService;
-    }
+//    // AdminService Constructor
+//    @Autowired // Injects adminService to AdminController
+//    public AdminController(AdminService adminService) {
+//        this.adminService = adminService;
+//    }
 
     // GET All Admin Details
     @GetMapping(path = "allAdmin")

@@ -1,6 +1,7 @@
 package com.example.SpringMaster.exception;
 
 import com.example.SpringMaster.Admin.AdminService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -12,11 +13,14 @@ import java.time.ZonedDateTime;
 
 // Handles > 1 Exception
 @ControllerAdvice // To allow class to be used throughout whole application for exceptions
+
+// Lombok
+@Slf4j
 public class ApiExceptionHandler {
 
-    //    Logging for ApiExceptionHandler Class
-    private final static Logger LOGGER =
-            LoggerFactory.getLogger(AdminService.class);
+//    //    Logging for ApiExceptionHandler Class
+//    private final static Logger LOGGER =
+//            LoggerFactory.getLogger(AdminService.class);
 
     @ExceptionHandler(value = ApiRequestException.class) // to handle more than 1 exception
     public ResponseEntity<Object> handleApiRequestException(

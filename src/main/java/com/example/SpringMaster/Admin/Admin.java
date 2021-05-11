@@ -2,6 +2,11 @@ package com.example.SpringMaster.Admin;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import net.bytebuddy.build.ToStringPlugin;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -11,6 +16,12 @@ import java.time.LocalDate;
 // Admin - Class
 @Entity
 @Table
+
+// lombok
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 // @Entity @Table maps Admin class to H2 DB Table
 public class Admin {
     // Class properties
@@ -41,19 +52,19 @@ public class Admin {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Allows sending password and not reading it
     private String password;
 
-    // Admin - Constructor
-    Admin(long id, String fullName, String email, LocalDate dob, String mobileNumber, String password) {
-        this.id = id;
-        this.fullName = fullName;
-        this.email = email;
-        this.dob = dob;
-        this.mobileNumber = mobileNumber;
-        this.password = password;
-    }
-
-    // Admin - Empty Constructor
-    public Admin() {
-    }
+//    // Admin - Constructor
+//    Admin(long id, String fullName, String email, LocalDate dob, String mobileNumber, String password) {
+//        this.id = id;
+//        this.fullName = fullName;
+//        this.email = email;
+//        this.dob = dob;
+//        this.mobileNumber = mobileNumber;
+//        this.password = password;
+//    }
+//
+//    // Admin - Empty Constructor
+//    public Admin() {
+//    }
 
     // Admin - Getters
 
@@ -83,15 +94,15 @@ public class Admin {
         return password;
     }
 
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "id=" + id +
-                ", fullName='" + fullName + '\'' +
-                ", email='" + email + '\'' +
-                ", dob=" + dob +
-                ", mobileNumber='" + mobileNumber + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Admin{" +
+//                "id=" + id +
+//                ", fullName='" + fullName + '\'' +
+//                ", email='" + email + '\'' +
+//                ", dob=" + dob +
+//                ", mobileNumber='" + mobileNumber + '\'' +
+//                ", password='" + password + '\'' +
+//                '}';
+//    }
 }
