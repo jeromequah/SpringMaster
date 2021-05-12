@@ -22,6 +22,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+// @Data used when fields are meant to be final, replaces everything
 // @Entity @Table maps Admin class to H2 DB Table
 public class Admin {
     // Class properties
