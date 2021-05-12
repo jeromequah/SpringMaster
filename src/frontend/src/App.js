@@ -5,13 +5,15 @@ import {
     Layout,
     Menu,
     Breadcrumb,
-    Table } from "antd";
+    Table, Spin, Empty
+} from "antd";
 import {
     DesktopOutlined,
     PieChartOutlined,
     FileOutlined,
     TeamOutlined,
     UserOutlined,
+    LoadingOutlined,
 } from '@ant-design/icons';
 
 // Styling
@@ -61,10 +63,13 @@ const columns = [
     },
 ];
 
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
 // FE Components
 function App() {
     const [admins, setAdmins] = useState([]);
     const [collapsed, setCollapsed] = useState(false);
+    const [fetching, setFetching] = useState(true);
 
     const fetchAdmins = () =>
         getAllAdmin()
@@ -72,6 +77,7 @@ function App() {
             .then(data => {
                 console.log(data);
                 setAdmins(data)
+                setFetching(false); // When loaded, set feching false
             })
 
     useEffect(() => { // Invokes function once
@@ -80,13 +86,23 @@ function App() {
     },[]);
 
     const renderAdmins = () => {
-        if (admins.length <= 0) {
-            return "No Data Available";
+        if (fetching) {
+            return <Spin indicator={antIcon}/>
         }
+        if (admins.length <= 0) {
+            return <Empty />;
+        }
+
         // Data Source
         return <Table
             dataSource={admins}
-            columns={columns}/>;
+            columns={columns}
+            bordered
+            title={() => 'Admin'}
+            pagination={{ pageSize: 50 }}
+            scroll={{ y: 240 }}
+            rowKey={(admin) => admin.adminId}
+        />;
     }
 
     return <Layout style={{ minHeight: '100vh' }}>
@@ -121,12 +137,12 @@ function App() {
                     <Breadcrumb.Item>User</Breadcrumb.Item>
                     <Breadcrumb.Item>Bill</Breadcrumb.Item>
                 </Breadcrumb>
-                {/*Actual Content*/}
+                {/*Actual Content - Render Table*/}
                 <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                     {renderAdmins()}
                 </div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>Spring Master by Rome.Q</Footer>
+            <Footer style={{ textAlign: 'center' }}>Spring Master By Rome.Q</Footer>
         </Layout>
     </Layout>
 
