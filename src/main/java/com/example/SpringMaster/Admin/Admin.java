@@ -50,7 +50,7 @@ public class Admin {
     private String mobileNumber;
 
     @NotBlank(message = "Password must be not empty")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Allows sending password and not reading it
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Allows sending password and not reading it
     private String password;
 
 //    // Admin - Constructor
@@ -90,7 +90,7 @@ public class Admin {
         return mobileNumber;
     }
 
-    @JsonIgnore // password will not be returned
+    // @JsonIgnore password will not be returned
     public String getPassword() {
         return password;
     }

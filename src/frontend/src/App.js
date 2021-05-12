@@ -1,7 +1,11 @@
 // The Main Entry Point for React App
 
 // Ant Design
-import { Layout, Menu, Breadcrumb } from "antd";
+import {
+    Layout,
+    Menu,
+    Breadcrumb,
+    Table } from "antd";
 import {
     DesktopOutlined,
     PieChartOutlined,
@@ -24,6 +28,39 @@ import {
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
+const columns = [
+    {
+        title: 'Admin ID',
+        dataIndex: 'adminId',
+        key: 'adminId',
+    },
+    {
+        title: 'Full Name',
+        dataIndex: 'fullName',
+        key: 'fullName',
+    },
+    {
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email',
+    },
+    {
+        title: 'Date of Birth',
+        dataIndex: 'dob',
+        key: 'dob',
+    },
+    {
+        title: 'Mobile Number',
+        dataIndex: 'mobileNumber',
+        key: 'mobileNumber',
+    },
+    {
+        title: 'Password',
+        dataIndex: 'password',
+        key: 'password',
+    },
+];
+
 // FE Components
 function App() {
     const [admins, setAdmins] = useState([]);
@@ -42,8 +79,14 @@ function App() {
         fetchAdmins(); // admins variable will contain the array
     },[]);
 
-    if (admins.length <= 0) {
-        return "no admins";
+    const renderAdmins = () => {
+        if (admins.length <= 0) {
+            return "No Data Available";
+        }
+        // Data Source
+        return <Table
+            dataSource={admins}
+            columns={columns}/>;
     }
 
     return <Layout style={{ minHeight: '100vh' }}>
@@ -78,11 +121,12 @@ function App() {
                     <Breadcrumb.Item>User</Breadcrumb.Item>
                     <Breadcrumb.Item>Bill</Breadcrumb.Item>
                 </Breadcrumb>
+                {/*Actual Content*/}
                 <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                    Bill is a cat.
+                    {renderAdmins()}
                 </div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+            <Footer style={{ textAlign: 'center' }}>Spring Master by Rome.Q</Footer>
         </Layout>
     </Layout>
 
