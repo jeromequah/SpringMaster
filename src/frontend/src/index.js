@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import './index.css'; // Styling imported from .css
+import App from './App'; // Mounting point for app
+import reportWebVitals from './reportWebVitals'; // Measuring Performance
 
-// Styling imported from .css
-ReactDOM.render(
+
+ReactDOM.render( // Renders Application
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root') // renders into HTML with id root in public folder index.html
 );
 
 // If you want to start measuring performance in your app, pass a function
