@@ -15,6 +15,9 @@
 	<description>Spring Boot Master Class Tutorial</description>
 	<properties>
 		<java.version>11</java.version>
+		<!-- Image Details		-->
+		<app.image.name>springmaster</app.image.name>
+		<app.image.tag/>
 		<spring.cloud-version>2020.0.0</spring.cloud-version>
 	</properties>
 
@@ -111,10 +114,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -146,8 +145,125 @@
 		</plugins>
 	</build>
 
-	<!-- Profile for FE to be included in build	-->
+
 	<profiles>
+		<!-- Profile to push to DockerHub	-->
+		<profile>
+			<id>jib-push-to-dockerhub</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<!--	jib Plugin				-->
+					<plugin>
+						<groupId>com.google.cloud.tools</groupId>
+						<artifactId>jib-maven-plugin</artifactId>
+						<version>2.5.2</version>
+						<configuration>
+							<!--		Base image we are basing from				-->
+							<from>
+								<image>openjdk:11</image>
+							</from>
+							<!--		Container properties				-->
+							<container>
+								<ports>
+									<port>8080</port>
+								</ports>
+								<!--		Open Container Initiative				-->
+								<format>OCI</format>
+							</container>
+						</configuration>
+						<executions>
+							<execution>
+								<id>push-custom-tag</id>
+								<phase>package</phase>
+								<configuration>
+									<to>
+										<image>docker.io/romequ/${app.image.name}:${app.image.tag}</image>
+									</to>
+								</configuration>
+								<goals>
+									<goal>build</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>push-latest-tag</id>
+								<phase>package</phase>
+								<configuration>
+									<to>
+										<image>docker.io/romequ/${app.image.name}:latest</image>
+									</to>
+								</configuration>
+								<goals>
+									<goal>build</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- Profile to push to local Docker	-->
+		<profile>
+			<id>jib-push-to-docker</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<!--	jib Plugin				-->
+					<plugin>
+						<groupId>com.google.cloud.tools</groupId>
+						<artifactId>jib-maven-plugin</artifactId>
+						<version>2.5.2</version>
+						<configuration>
+							<!--		Base image we are basing from				-->
+							<from>
+								<image>openjdk:11</image>
+							</from>
+							<!--		Container properties				-->
+							<container>
+								<ports>
+									<port>8080</port>
+								</ports>
+								<!--		Open Container Initiative				-->
+								<format>OCI</format>
+							</container>
+						</configuration>
+						<executions>
+							<execution>
+								<id>push-custom-tag</id>
+								<phase>package</phase>
+								<configuration>
+									<to>
+										<image>romequ/${app.image.name}:${app.image.tag}</image>
+									</to>
+								</configuration>
+								<goals>
+									<goal>dockerBuild</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>push-latest-tag</id>
+								<phase>package</phase>
+								<configuration>
+									<to>
+										<image>romequ/${app.image.name}:latest</image>
+									</to>
+								</configuration>
+								<goals>
+									<goal>dockerBuild</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- Profile for FE to be included in build	-->
 		<profile>
 			<id>build-frontend</id>
 			<activation>
