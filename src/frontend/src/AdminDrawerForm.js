@@ -1,19 +1,35 @@
 // AdminDrawerForm.js
-import {Button, Col, Drawer, Form, Input, Row} from 'antd';
-
+import {Button, Col, Drawer, Form, Input, Row, Spin} from 'antd';
 // API Function
 import {createAdmin} from "./client";
+import {useState} from 'react';
+import {LoadingOutlined} from "@ant-design/icons";
+import {successNotification, errorNotification} from "./Notification";
 
-function AdminDrawerForm({showDrawer, setShowDrawer}) {
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+function AdminDrawerForm({showDrawer, setShowDrawer, fetchAdmins}) {
+    // Close the drawer
     const onCLose = () => setShowDrawer(false);
+    // States after adding
+    const [submitting, setSubmitting] = useState(false);
 
     const onFinish = admin => {
+        setSubmitting(true);
         console.log(JSON.stringify(admin, null, 2))
-        createAdmin(admin)
+        createAdmin(admin) // execute createAdmin API
             .then(() => {
                 console.log("Admin Successfully Added!")
+                onCLose(); // Close Drawer
+                successNotification( // Success Noti
+                    "Admin Successfully Added!",
+                    `${admin.fullName} with email ${admin.email} was added!`
+                    )
+                fetchAdmins(); // Refresh Table
             }).catch(err => {
-            console.log(err)
+                console.log(err)
+            }).finally(() => {
+                setSubmitting(false);
         })
     };
 
@@ -102,6 +118,9 @@ function AdminDrawerForm({showDrawer, setShowDrawer}) {
                         </Button>
                     </Form.Item>
                 </Col>
+            </Row>
+            <Row>
+                {submitting && <Spin indicator = {antIcon}/>}
             </Row>
         </Form>
     </Drawer>

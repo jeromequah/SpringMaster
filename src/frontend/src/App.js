@@ -97,6 +97,7 @@ function App() {
             <AdminDrawerForm
                 showDrawer={showDrawer}
                 setShowDrawer={setShowDrawer}
+                fetchAdmins = {fetchAdmins}
             />
             <Table
                 dataSource={admins}
