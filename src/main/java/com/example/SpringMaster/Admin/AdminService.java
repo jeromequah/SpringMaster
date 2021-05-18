@@ -1,13 +1,7 @@
 package com.example.SpringMaster.Admin;
 
-import com.example.SpringMaster.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.common.util.impl.Log_$logger;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -44,7 +38,7 @@ public class AdminService {
 
     Admin getAdmin(String email) {
         Admin admin = adminRepository.findByEmail(email);
-        if (admin!=null) {
+        if (admin != null) {
             return admin;
         } else {
             return new Admin();
@@ -52,6 +46,7 @@ public class AdminService {
     }
 
     Admin createAdmin(Admin newAdmin) {
+        // TODO check if admin exists
         adminRepository.save(newAdmin);
         return newAdmin;
     }

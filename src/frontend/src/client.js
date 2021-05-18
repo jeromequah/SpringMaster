@@ -15,3 +15,13 @@ const checkStatus = response => {
 export const getAllAdmin = () =>
     fetch('api/v1/admins/allAdmin')
     .then(checkStatus);
+
+export const createAdmin = admin =>
+    fetch('api/v1/admins/createAdmin', {
+        headers:{
+            'Content-Type':'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(admin)
+    })
+        .then(checkStatus);

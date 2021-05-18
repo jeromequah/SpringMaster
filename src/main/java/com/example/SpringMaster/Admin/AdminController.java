@@ -2,11 +2,7 @@ package com.example.SpringMaster.Admin;
 
 import com.example.SpringMaster.exception.ApiRequestException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -37,14 +33,14 @@ public class AdminController {
     }
 
     // GET SINGLE Admin Details
-    @GetMapping(path ="getAdminDetails")
+    @GetMapping(path = "getAdminDetails")
     Admin getAdmin(@Param("email") String email) {
         System.out.println("GET REQUEST...");
         return adminService.getAdmin(email);
     }
 
     // GET SINGLE Admin Details Exception
-    @GetMapping(path ="{adminId}/exception")
+    @GetMapping(path = "{adminId}/exception")
     Admin getAdminException(@PathVariable("adminId") Long id) {
         throw new ApiRequestException(
                 "ApiRequestException for Admin " + id
@@ -62,7 +58,7 @@ public class AdminController {
 //    }
     )
     Admin createAdmin(@Valid // Invokes NotBlank for Admin Class
-                        @RequestBody Admin admin) {
+                      @RequestBody Admin admin) {
         System.out.println("POST REQUEST...");
         System.out.println(admin);
         return adminService.createAdmin(admin);
