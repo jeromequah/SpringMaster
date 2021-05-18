@@ -1,7 +1,7 @@
 // The Main Entry Point for React App
 
 // Ant Design
-import {Badge, Breadcrumb, Button, Empty, Layout, Menu, Spin, Table, Tag} from "antd";
+import {Avatar, Badge, Breadcrumb, Button, Empty, Layout, Menu, Spin, Table, Tag} from "antd";
 import {
     FileOutlined,
     HistoryOutlined,
@@ -27,7 +27,31 @@ import {getAllAdmin} from "./client";
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
 
+const TheAvatar = ({name}) => {
+    // If no name, return Avatar Icon
+    let trim = name.trim();
+    if (trim.length === 0) {
+        return <Avatar icon={<UserOutlined/>}/>
+    }
+    // If single name E.g. Jerome, return J
+    const split = trim.split(" ");
+    if (split.length ===1) {
+        return <Avatar>{name.charAt(0)}</Avatar>
+    }
+    // Return First Character and Last Character
+    return <Avatar>
+        {`${name.charAt(0)}${name.charAt(name.length-1)}`}
+    </Avatar>
+}
+
 const columns = [
+    {
+        title: '',
+        dataIndex: 'avatar',
+        key: 'avatar',
+        render: (text, admin) =>
+            <TheAvatar name = {admin.fullName}/>
+    },
     {
         title: 'Admin ID',
         dataIndex: 'adminId',
