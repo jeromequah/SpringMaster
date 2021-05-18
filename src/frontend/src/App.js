@@ -1,7 +1,7 @@
 // The Main Entry Point for React App
 
 // Ant Design
-import {Breadcrumb, Button, Empty, Layout, Menu, Spin, Table} from "antd";
+import {Badge, Breadcrumb, Button, Empty, Layout, Menu, Spin, Table, Tag} from "antd";
 import {
     FileOutlined,
     HistoryOutlined,
@@ -103,13 +103,18 @@ function App() {
                 dataSource={admins}
                 columns={columns}
                 bordered
-                // createAdmin Button
                 title={() =>
-                    <Button
-                        onClick={() => setShowDrawer(!showDrawer)}
-                        type="primary" shape="round" icon={<PlusCircleFilled/>} size="medium">
-                        Add Admin
-                    </Button>}
+                    <>
+                        <Tag color="orange">Number of Admins</Tag>
+                        <Badge count={admins.length} className="site-badge-count-4" />
+                        <br/><br/>
+                        {/*createAdmin Button*/}
+                        <Button
+                            onClick={() => setShowDrawer(!showDrawer)}
+                            type="primary" shape="round" icon={<PlusCircleFilled/>} size="medium">
+                            Add Admin
+                        </Button>
+                    </>}
                 pagination={{pageSize: 50}}
                 scroll={{y: 700}}
                 rowKey={(admin) => admin.adminId}
