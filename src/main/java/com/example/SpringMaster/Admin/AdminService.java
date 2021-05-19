@@ -45,17 +45,14 @@ public class AdminService {
         }
     }
 
-    Admin createAdmin(Admin newAdmin) {
-        // TODO check if admin exists
+    public void createAdmin(Admin newAdmin) {
+        // TODO check if admin is already present
         adminRepository.save(newAdmin);
-        return newAdmin;
+    }
+
+    public void deleteAdmin(long adminId) {
+        // TODO check if admin exists
+        adminRepository.deleteById(adminId);
     }
 }
-//                .orElseThrow(
-//                        () -> {
-//                            NotFoundException notFoundException = new NotFoundException(
-//                                    "Admin with id " + id + " Not Found");
-//                            log.error("Error for admin {}", id, notFoundException);
-//                            return notFoundException;
-
 

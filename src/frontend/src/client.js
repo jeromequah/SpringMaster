@@ -25,3 +25,8 @@ export const createAdmin = admin =>
         body: JSON.stringify(admin)
     })
         .then(checkStatus);
+
+export const deleteAdmin = adminId =>
+    fetch(`api/v1/admins/delete/${adminId}`, {
+        method: 'DELETE'
+    }).then(checkStatus);

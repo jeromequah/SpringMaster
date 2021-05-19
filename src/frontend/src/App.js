@@ -1,7 +1,7 @@
 // The Main Entry Point for React App
 
 // Ant Design
-import {Avatar, Badge, Breadcrumb, Button, Empty, Layout, Menu, Spin, Table, Tag} from "antd";
+import {Avatar, Badge, Breadcrumb, Button, Empty, Layout, Menu, Spin, Table, Tag, Radio, Popconfirm} from "antd";
 import {
     FileOutlined,
     HistoryOutlined,
@@ -22,7 +22,8 @@ import './App.css';
 import {useEffect, useState} from 'react'
 
 // API References
-import {getAllAdmin} from "./client";
+import {deleteAdmin, getAllAdmin} from "./client";
+import {successNotification} from "./Notification";
 
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
@@ -44,9 +45,16 @@ const TheAvatar = ({name}) => {
     </Avatar>
 }
 
-const columns = [
+const removeAdmin = (adminId, callback) => {
+    deleteAdmin(adminId).then(() => {
+        successNotification("Admin Deleted", `Admin with id ${adminId} was deleted`);
+        callback(); // fetchAdmin is called here to refresh table
+    })
+}
+
+const columns = fetchAdmins => [
     {
-        title: '',
+        title: 'Logo',
         dataIndex: 'avatar',
         key: 'avatar',
         render: (text, admin) =>
@@ -82,6 +90,22 @@ const columns = [
         dataIndex: 'password',
         key: 'password',
     },
+    {
+        title: 'Actions',
+        key: 'actions',
+        render: (text, admin) =>
+            <Radio.Group>
+                <Popconfirm
+                    placement='topRight'
+                    title={`Are you sure to delete ${admin.fullName} ?`}
+                    onConfirm={() => removeAdmin(admin.adminId, fetchAdmins)}
+                    okText='Yes'
+                    cancelText='No'>
+                    <Radio.Button value="small">Delete</Radio.Button>
+                </Popconfirm>
+                <Radio.Button value="small">Edit</Radio.Button>
+            </Radio.Group>
+    }
 ];
 
 const antIcon = <LoadingOutlined style={{fontSize: 24}} spin/>;
@@ -112,9 +136,6 @@ function App() {
         if (fetching) {
             return <Spin indicator={antIcon}/>
         }
-        if (admins.length <= 0) {
-            return <Empty/>;
-        }
 
         // Returning Data
         return <>
@@ -125,7 +146,7 @@ function App() {
             />
             <Table
                 dataSource={admins}
-                columns={columns}
+                columns={columns(fetchAdmins)}
                 bordered
                 title={() =>
                     <>
