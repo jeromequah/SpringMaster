@@ -23,7 +23,7 @@ import {useEffect, useState} from 'react'
 
 // API References
 import {deleteAdmin, getAllAdmin} from "./client";
-import {successNotification} from "./Notification";
+import {errorNotification, successNotification} from "./Notification";
 
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
@@ -46,9 +46,18 @@ const TheAvatar = ({name}) => {
 }
 
 const removeAdmin = (adminId, callback) => {
-    deleteAdmin(adminId).then(() => {
+    deleteAdmin(123123).then(() => {
         successNotification("Admin Deleted", `Admin with id ${adminId} was deleted`);
         callback(); // fetchAdmin is called here to refresh table
+    }).catch(err => {
+        console.log(err)
+        err.response.json().then(res => {
+            console.log(res);
+            errorNotification(
+                "Delete Admin Failed!",
+                `${res.message} [${res.status}] [${res.error}]`
+            )
+        })
     })
 }
 
@@ -125,7 +134,14 @@ function App() {
                 console.log(data);
                 setAdmins(data)
                 setFetching(false); // When loaded, set feching false
-            })
+            }).catch(err => {
+                console.log(err.response)
+                err.response.json().then(res => {
+                    console.log(res);
+                    errorNotification("Issue!",
+                        `${res.message} [${res.status}] [${res.error}]`)
+                });
+            }).finally(() => setFetching(false));
 
     useEffect(() => { // Invokes function once
         console.log("Component Mounted")
@@ -210,7 +226,5 @@ function App() {
             <Footer style={{textAlign: 'center'}}>Spring Master By Rome.Q</Footer>
         </Layout>
     </Layout>
-
 }
-
 export default App;

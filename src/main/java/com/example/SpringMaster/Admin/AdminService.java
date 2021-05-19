@@ -1,5 +1,7 @@
 package com.example.SpringMaster.Admin;
 
+import com.example.SpringMaster.exception.BadRequestException;
+import com.example.SpringMaster.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -46,13 +48,20 @@ public class AdminService {
     }
 
     public void createAdmin(Admin newAdmin) {
-        // TODO check if admin is already present
-        adminRepository.save(newAdmin);
+        String newEmail = newAdmin.getEmail();
+        if (adminRepository.findByEmail(newEmail) != null) {
+            throw new BadRequestException("Admin with email: " + newEmail + " already exists!");
+        } else {
+            adminRepository.save(newAdmin);
+        }
     }
 
     public void deleteAdmin(long adminId) {
-        // TODO check if admin exists
-        adminRepository.deleteById(adminId);
+        if (adminRepository.findById(adminId).isEmpty()) {
+            throw new NotFoundException("Admin with ID: " + adminId + "does not exist!");
+        } else {
+            adminRepository.deleteById(adminId);
+        }
     }
 }
 

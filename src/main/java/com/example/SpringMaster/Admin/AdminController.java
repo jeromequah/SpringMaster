@@ -27,13 +27,13 @@ public class AdminController {
 
     // GET All Admin Details
     @GetMapping(path = "allAdmin")
-    List<Admin> getAdmins() {
+    public List<Admin> getAdmins() {
         return adminService.getAdmins();
     }
 
     // GET SINGLE Admin Details
     @GetMapping(path = "getAdminDetails")
-    Admin getAdmin(@Param("email") String email) {
+    public Admin getAdmin(@Param("email") String email) {
         return adminService.getAdmin(email);
     }
 
@@ -46,19 +46,19 @@ public class AdminController {
     }
 
     @PostMapping(path = "createAdmin")
-    void createAdmin(@Valid // Invokes NotBlank for Admin Class
+    public void createAdmin(@Valid // Invokes NotBlank for Admin Class
                      @RequestBody Admin admin) {
         adminService.createAdmin(admin);
     }
 
     @PutMapping(path = "update")
-    void updateAdmin(@RequestBody Admin admin) {
+    public void updateAdmin(@RequestBody Admin admin) {
         System.out.println("UPDATE REQUEST...");
         System.out.println(admin);
     }
 
     @DeleteMapping(path = "delete/{adminId}")
-    void deleteAdmin(@PathVariable("adminId") Long adminId) {
+    public void deleteAdmin(@PathVariable("adminId") Long adminId) {
         adminService.deleteAdmin(adminId);
     }
 }

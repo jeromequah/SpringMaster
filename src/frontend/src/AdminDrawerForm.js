@@ -28,6 +28,13 @@ function AdminDrawerForm({showDrawer, setShowDrawer, fetchAdmins}) {
                 fetchAdmins(); // Refresh Table
             }).catch(err => {
                 console.log(err)
+                err.response.json().then(res => {
+                    console.log(res);
+                    errorNotification(
+                        "Create Admin Failed!",
+                        `${res.message} [${res.status}] [${res.error}]`,
+                        "bottomLeft")
+                })
             }).finally(() => {
                 setSubmitting(false);
         })
