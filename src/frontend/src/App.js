@@ -1,7 +1,18 @@
 // The Main Entry Point for React App
 
 // Ant Design
-import {Avatar, Badge, Breadcrumb, Button, Empty, Layout, Menu, Spin, Table, Tag, Radio, Popconfirm} from "antd";
+import {Avatar,
+    Badge,
+    Breadcrumb,
+    Button,
+    Empty,
+    Layout,
+    Menu,
+    Spin,
+    Table,
+    Tag,
+    Radio,
+    Popconfirm} from "antd";
 import {
     FileOutlined,
     HistoryOutlined,
@@ -9,8 +20,7 @@ import {
     LockOutlined,
     PlusCircleFilled,
     TeamOutlined,
-    UserOutlined,
-} from '@ant-design/icons';
+    UserOutlined,} from '@ant-design/icons';
 
 // AdminDrawerForm
 import AdminDrawerForm from "./AdminDrawerForm";
@@ -23,6 +33,8 @@ import {useEffect, useState} from 'react'
 
 // API References
 import {deleteAdmin, getAllAdmin} from "./client";
+
+// Notifications
 import {errorNotification, successNotification} from "./Notification";
 
 const {Header, Content, Footer, Sider} = Layout;
@@ -46,7 +58,7 @@ const TheAvatar = ({name}) => {
 }
 
 const removeAdmin = (adminId, callback) => {
-    deleteAdmin(123123).then(() => {
+    deleteAdmin(adminId).then(() => {
         successNotification("Admin Deleted", `Admin with id ${adminId} was deleted`);
         callback(); // fetchAdmin is called here to refresh table
     }).catch(err => {

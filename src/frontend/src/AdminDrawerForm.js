@@ -1,9 +1,16 @@
 // AdminDrawerForm.js
+
 import {Button, Col, Drawer, Form, Input, Row, Spin} from 'antd';
+
+import {LoadingOutlined} from "@ant-design/icons";
+
 // API Function
 import {createAdmin} from "./client";
+
+// Tracking State
 import {useState} from 'react';
-import {LoadingOutlined} from "@ant-design/icons";
+
+// Notifications
 import {successNotification, errorNotification} from "./Notification";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;

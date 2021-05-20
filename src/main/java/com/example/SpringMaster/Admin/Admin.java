@@ -44,6 +44,7 @@ public class Admin {
 
     @NotBlank(message = "Email must be not empty")
     @Email // Email Validation
+    @Column(nullable = false, unique = true)
     private String email;
 
     private LocalDate dob;
