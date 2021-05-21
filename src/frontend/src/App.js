@@ -1,7 +1,8 @@
 // The Main Entry Point for React App
 
 // Ant Design
-import {Avatar,
+import {
+    Avatar,
     Badge,
     Breadcrumb,
     Button,
@@ -12,7 +13,8 @@ import {Avatar,
     Table,
     Tag,
     Radio,
-    Popconfirm} from "antd";
+    Popconfirm, Image
+} from "antd";
 import {
     FileOutlined,
     HistoryOutlined,
@@ -235,7 +237,13 @@ function App() {
                     {renderAdmins()}
                 </div>
             </Content>
-            <Footer style={{textAlign: 'center'}}>Spring Master By Rome.Q</Footer>
+            <Footer style={{textAlign: 'center'}}>
+                <Image
+                    width={75}
+                    src="https://user-images.githubusercontent.com/58114318/118937368-0d98c400-b980-11eb-968e-dab6771c69f7.jpeg"
+                /><br/>
+                Spring Master By Rome.Q
+            </Footer>
         </Layout>
     </Layout>
 }
