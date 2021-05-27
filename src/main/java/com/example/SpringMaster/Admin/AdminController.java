@@ -51,6 +51,7 @@ public class AdminController {
         adminService.createAdmin(admin);
     }
 
+    // TODO Edit Admin Details
     @PutMapping(path = "update")
     public void updateAdmin(@RequestBody Admin admin) {
         System.out.println("UPDATE REQUEST...");
