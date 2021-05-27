@@ -1,5 +1,7 @@
 package com.example.SpringMaster.Admin;
 
+import com.example.SpringMaster.Auth.Auth;
+import com.example.SpringMaster.Usage.Usage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -12,9 +14,13 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 // Admin - Class
-@Entity
+@Entity(name = "Admin")
 @Table
 
 // lombok
@@ -54,22 +60,34 @@ public class Admin {
 //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Allows sending password and not reading it
     private String password;
 
-//    // Admin - Constructor
-//    Admin(long id, String fullName, String email, LocalDate dob, String mobileNumber, String password) {
-//        this.id = id;
-//        this.fullName = fullName;
-//        this.email = email;
-//        this.dob = dob;
-//        this.mobileNumber = mobileNumber;
-//        this.password = password;
-//    }
-//
-//    // Admin - Empty Constructor
-//    public Admin() {
-//    }
+    // TODO R/S USAGE: ONE Admin, MANY Usages
+    @OneToMany(mappedBy = "adminUsage")
+    private Set<Usage> usages = new HashSet<>();
+
+    // TODO R/S AUTH: ONE Admin, Many Auths
+    @OneToMany(
+            mappedBy = "adminAuthorizer",
+            orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch = FetchType.LAZY
+    )
+    private List<Auth> authorization = new ArrayList<>();
+
+    // TODO R/S ADMIN: an Admin can be authorised by many Admins, an Admin can authorize many Admins
+    @ManyToMany
+    @JoinTable( // creates new table
+            name="admin_authorised",
+            joinColumns = @JoinColumn(name="admin_authorised_id"),
+            inverseJoinColumns = @JoinColumn(name="admin_authoriser_id")
+    )
+    private Set<Admin> adminAllow = new HashSet<>();
+
+    // Mapping for unary
+    @JsonIgnore
+    @ManyToMany(mappedBy = "adminAllow")
+    private Set<Admin> adminAllowed = new HashSet<>();
 
     // Admin - Getters
-
     @JsonProperty("adminId") // changes id label to customer ID
     public long getId() {
         return id;
@@ -91,11 +109,42 @@ public class Admin {
         return mobileNumber;
     }
 
-    // @JsonIgnore password will not be returned
     public String getPassword() {
         return password;
     }
 
+    public Set<Usage> getUsages() {
+        return usages;
+    }
+
+    public List<Auth> getAuthorization() {
+        return authorization;
+    }
+
+    public Set<Admin> getAdminAllow() {
+        return adminAllow;
+    }
+
+    public Set<Admin> getAdminAllowed() {
+        return adminAllowed;
+    }
+}
+
+//    // Admin - Constructor
+//    Admin(long id, String fullName, String email, LocalDate dob, String mobileNumber, String password) {
+//        this.id = id;
+//        this.fullName = fullName;
+//        this.email = email;
+//        this.dob = dob;
+//        this.mobileNumber = mobileNumber;
+//        this.password = password;
+//    }
+//
+//    // Admin - Empty Constructor
+//    public Admin() {
+//    }
+
+// // Admin ToString
 //    @Override
 //    public String toString() {
 //        return "Admin{" +
@@ -107,4 +156,3 @@ public class Admin {
 //                ", password='" + password + '\'' +
 //                '}';
 //    }
-}
