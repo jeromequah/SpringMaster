@@ -1,15 +1,17 @@
 package com.example.SpringMaster.Auth;
 
-
 import com.example.SpringMaster.Admin.Admin;
 import com.example.SpringMaster.Lock.Lock;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 // Auth - Class
 @Entity(name = "Auth")
@@ -22,9 +24,6 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 
 public class Auth {
-    // Class Properties
-
-    // Autogenerate ID
     // Class Properties
 
     // Autogenerate ID
@@ -41,10 +40,10 @@ public class Auth {
     private long id;
 
     // DateTimestamp
-    private LocalDateTime datetimeAccepted;
+    private String datetimeAccepted;
 
     // TODO R/S ADMIN: MANY Auths, ONE Admin
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Admin.class, cascade = {CascadeType.ALL})
     @JoinColumn(
             name = "authorizer_admin_id",
             nullable = true,
@@ -53,12 +52,13 @@ public class Auth {
     private Admin adminAuthorizer;
 
     // TODO R/S LOCK: MANY Auths, ONE Lock
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Lock.class)
     @JoinColumn(
             name = "lock_id",
             nullable = true,
             referencedColumnName = "id"
     )
+    @JsonBackReference
     private Lock lock;
 
     // AUTH - Getters
@@ -66,7 +66,7 @@ public class Auth {
         return id;
     }
 
-    public LocalDateTime getDatetimeAccepted() {
+    public String getDatetimeAccepted() {
         return datetimeAccepted;
     }
 
@@ -76,5 +76,11 @@ public class Auth {
 
     public Lock getLock() {
         return lock;
+    }
+
+    public void setDatetimeAccepted(String datetimeAccepted) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        this.datetimeAccepted = now.format(format);
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 // Lock - SERVICE Layer (Business Logic)
-@Component // Bean to onject in multiple places with SAME intance
+@Component // Bean to object in multiple places with SAME intance
 
 // lombok
 @AllArgsConstructor

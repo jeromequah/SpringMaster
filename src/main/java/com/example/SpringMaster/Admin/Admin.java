@@ -2,7 +2,9 @@ package com.example.SpringMaster.Admin;
 
 import com.example.SpringMaster.Auth.Auth;
 import com.example.SpringMaster.Usage.Usage;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -45,32 +47,28 @@ public class Admin {
     )
     private long id;
 
-    @NotBlank(message = "Full Name must be not empty") // Cannot be empty
+//    @NotBlank(message = "Full Name must be not empty")
     private String fullName;
 
-    @NotBlank(message = "Email must be not empty")
+//    @NotBlank(message = "Email must be not empty")
     @Email // Email Validation
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true)
     private String email;
 
     private LocalDate dob;
     private String mobileNumber;
 
-    @NotBlank(message = "Password must be not empty")
+//    @NotBlank(message = "Password must be not empty")
 //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Allows sending password and not reading it
     private String password;
 
     // TODO R/S USAGE: ONE Admin, MANY Usages
-    @OneToMany(mappedBy = "adminUsage")
+    @OneToMany(mappedBy = "adminUsage", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Usage> usages = new HashSet<>();
 
     // TODO R/S AUTH: ONE Admin, Many Auths
-    @OneToMany(
-            mappedBy = "adminAuthorizer",
-            orphanRemoval = true,
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            fetch = FetchType.LAZY
-    )
+    @OneToMany(mappedBy = "adminAuthorizer", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JsonBackReference
     private List<Auth> authorization = new ArrayList<>();
 
     // TODO R/S ADMIN: an Admin can be authorised by many Admins, an Admin can authorize many Admins

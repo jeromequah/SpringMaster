@@ -16,13 +16,15 @@ import {
     Popconfirm, Image
 } from "antd";
 import {
+    CheckCircleOutlined,
     FileOutlined,
     HistoryOutlined,
     LoadingOutlined,
     LockOutlined,
     PlusCircleFilled,
     TeamOutlined,
-    UserOutlined,} from '@ant-design/icons';
+    UserOutlined,
+} from '@ant-design/icons';
 
 // AdminDrawerForm
 import AdminDrawerForm from "./AdminDrawerForm";
@@ -203,26 +205,30 @@ function App() {
             <div className="logo"/>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                 <Menu.Item key="1" icon={<UserOutlined/>}>
-                    Admin
+                    Admins
                 </Menu.Item>
-                <Menu.Item key="2" icon={<HistoryOutlined/>}>
-                    Log
+                <Menu.Item key="2" icon={<LockOutlined/>}>
+                    Locks
                 </Menu.Item>
-                <Menu.Item key="3" icon={<LockOutlined/>}>
-                    Lock
+                <Menu.Item key="3" icon={<CheckCircleOutlined/>}>
+                    Authentications
                 </Menu.Item>
-                <SubMenu key="sub1" icon={<UserOutlined/>} title="User">
-                    <Menu.Item key="3">Tom</Menu.Item>
-                    <Menu.Item key="4">Bill</Menu.Item>
-                    <Menu.Item key="5">Alex</Menu.Item>
-                </SubMenu>
-                <SubMenu key="sub2" icon={<TeamOutlined/>} title="Team">
-                    <Menu.Item key="6">Team 1</Menu.Item>
-                    <Menu.Item key="8">Team 2</Menu.Item>
-                </SubMenu>
-                <Menu.Item key="9" icon={<FileOutlined/>}>
-                    Files
+                <Menu.Item key="4" icon={<HistoryOutlined/>}>
+                    Usages
                 </Menu.Item>
+                {/*Sub Menus for Future Use*/}
+                {/*<SubMenu key="sub1" icon={<UserOutlined/>} title="User">*/}
+                {/*    <Menu.Item key="5">Tom</Menu.Item>*/}
+                {/*    <Menu.Item key="6">Bill</Menu.Item>*/}
+                {/*    <Menu.Item key="7">Alex</Menu.Item>*/}
+                {/*</SubMenu>*/}
+                {/*<SubMenu key="sub2" icon={<TeamOutlined/>} title="Team">*/}
+                {/*    <Menu.Item key="8">Team 1</Menu.Item>*/}
+                {/*    <Menu.Item key="9">Team 2</Menu.Item>*/}
+                {/*</SubMenu>*/}
+                {/*<Menu.Item key="10" icon={<FileOutlined/>}>*/}
+                {/*    Files*/}
+                {/*</Menu.Item>*/}
             </Menu>
         </Sider>
         <Layout className="site-layout">
@@ -242,7 +248,7 @@ function App() {
                     width={75}
                     src="https://user-images.githubusercontent.com/58114318/118937368-0d98c400-b980-11eb-968e-dab6771c69f7.jpeg"
                 /><br/>
-                Spring Master By Rome.Q
+                SmartLockz
             </Footer>
         </Layout>
     </Layout>

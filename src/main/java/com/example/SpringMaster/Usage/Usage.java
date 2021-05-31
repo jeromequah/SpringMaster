@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -39,7 +38,7 @@ public class Usage {
     private LocalDateTime datetimeUnlocked;
 
     // TODO R/S ADMIN: MANY Usages, ONE Admin
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Admin.class)
     @JoinColumn(
             name = "admin_id",
             nullable = true,
@@ -48,7 +47,7 @@ public class Usage {
     private Admin adminUsage;
 
     // TODO R/S Lock: MANY Usages, ONE Lock
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Lock.class)
     @JoinColumn(
             name = "lock_id",
             nullable = true,

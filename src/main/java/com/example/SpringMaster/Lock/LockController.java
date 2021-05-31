@@ -39,7 +39,7 @@ public class LockController {
 
     // DELETE Lock
     @DeleteMapping(path = "delete/{lockId}")
-    public void deleteLock(@PathVariable("lockId") Long lockId) {
+    public void deleteLock(@PathVariable("lockId") long lockId) {
         lockService.deleteLock(lockId);
     }
 }
