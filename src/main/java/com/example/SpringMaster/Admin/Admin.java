@@ -2,7 +2,6 @@ package com.example.SpringMaster.Admin;
 
 import com.example.SpringMaster.Auth.Auth;
 import com.example.SpringMaster.Usage.Usage;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,11 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import net.bytebuddy.build.ToStringPlugin;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -52,7 +48,7 @@ public class Admin {
 
 //    @NotBlank(message = "Email must be not empty")
     @Email // Email Validation
-    @Column(nullable = true, unique = true)
+    @Column(unique = true)
     private String email;
 
     private LocalDate dob;
@@ -67,8 +63,8 @@ public class Admin {
     private Set<Usage> usages = new HashSet<>();
 
     // TODO R/S AUTH: ONE Admin, Many Auths
-    @OneToMany(mappedBy = "adminAuthorizer", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JsonBackReference
+    @OneToMany(mappedBy = "adminAuthorizer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "auth-admin")
     private List<Auth> authorization = new ArrayList<>();
 
     // TODO R/S ADMIN: an Admin can be authorised by many Admins, an Admin can authorize many Admins

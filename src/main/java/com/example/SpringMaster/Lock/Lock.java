@@ -1,17 +1,12 @@
 package com.example.SpringMaster.Lock;
 
-
 import com.example.SpringMaster.Auth.Auth;
 import com.example.SpringMaster.Usage.Usage;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -62,13 +57,12 @@ public class Lock {
     private String lockStatus;
 
     // TODO R/S USAGE: ONE Lock, MANY Usages
-    @OneToMany(mappedBy = "lock", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "lock", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Usage> usages = new ArrayList<>();
 
     // TODO R/S AUTH: ONE Lock, MANY Auths
-    @OneToMany(mappedBy = "lock", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-
-    @JsonManagedReference
+    @OneToMany(mappedBy = "lock", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "auth-lock")
     private List<Auth> auths = new ArrayList<>();
 
     // Lock - Getters

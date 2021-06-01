@@ -3,8 +3,6 @@ package com.example.SpringMaster.Auth;
 import com.example.SpringMaster.Admin.Admin;
 import com.example.SpringMaster.Lock.Lock;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -43,12 +41,13 @@ public class Auth {
     private String datetimeAccepted;
 
     // TODO R/S ADMIN: MANY Auths, ONE Admin
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Admin.class, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Admin.class)
     @JoinColumn(
             name = "authorizer_admin_id",
             nullable = true,
             referencedColumnName = "id"
     )
+    @JsonBackReference(value = "auth-admin")
     private Admin adminAuthorizer;
 
     // TODO R/S LOCK: MANY Auths, ONE Lock
@@ -58,7 +57,7 @@ public class Auth {
             nullable = true,
             referencedColumnName = "id"
     )
-    @JsonBackReference
+    @JsonBackReference(value = "auth-lock")
     private Lock lock;
 
     // AUTH - Getters
@@ -78,6 +77,7 @@ public class Auth {
         return lock;
     }
 
+    // TODO AUTH - Auto Set Timestamp Upon Creation instead of NULL
     public void setDatetimeAccepted(String datetimeAccepted) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

@@ -45,7 +45,7 @@ public class AuthService {
     public void createAuth(Auth newAuth) {
         long newAuthId = newAuth.getId();
         if (authRepository.findById(newAuthId).isPresent()) {
-            throw new BadRequestException("Lock with ID: " + newAuthId + " already exists!");
+            throw new BadRequestException("Auth with ID: " + newAuthId + " already exists!");
         } else {
             authRepository.save(newAuth);
         }
