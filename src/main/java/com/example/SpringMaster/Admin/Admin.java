@@ -2,6 +2,7 @@ package com.example.SpringMaster.Admin;
 
 import com.example.SpringMaster.Auth.Auth;
 import com.example.SpringMaster.Usage.Usage;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -60,7 +61,8 @@ public class Admin {
 
     // TODO R/S USAGE: ONE Admin, MANY Usages
     @OneToMany(mappedBy = "adminUsage", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Usage> usages = new HashSet<>();
+    @JsonManagedReference(value = "usage-admin")
+    private List<Usage> usages = new ArrayList<>();
 
     // TODO R/S AUTH: ONE Admin, Many Auths
     @OneToMany(mappedBy = "adminAuthorizer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -107,7 +109,7 @@ public class Admin {
         return password;
     }
 
-    public Set<Usage> getUsages() {
+    public List<Usage> getUsages() {
         return usages;
     }
 

@@ -58,6 +58,7 @@ public class Lock {
 
     // TODO R/S USAGE: ONE Lock, MANY Usages
     @OneToMany(mappedBy = "lock", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "usage-lock")
     private List<Usage> usages = new ArrayList<>();
 
     // TODO R/S AUTH: ONE Lock, MANY Auths

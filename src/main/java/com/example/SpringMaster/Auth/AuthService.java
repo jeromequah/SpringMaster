@@ -5,9 +5,7 @@ import com.example.SpringMaster.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
-import java.util.Optional;
 
 // Auth - SERVICE Layer (Business Logic)
 
@@ -16,7 +14,6 @@ import java.util.Optional;
 // lombok
 @AllArgsConstructor
 @Slf4j
-
 public class AuthService {
     // Ref to Auth - DATA ACCESS Layer via Interface
     private final AuthRepository authRepository;
@@ -53,7 +50,7 @@ public class AuthService {
 
     // DELETE auth
     public void deleteAuth(long authId) {
-        if(authRepository.findById(authId).isEmpty()){
+        if (authRepository.findById(authId).isEmpty()) {
             throw new NotFoundException("Auth with ID: " + authId + "does not exist!");
         } else {
             authRepository.deleteById(authId);
