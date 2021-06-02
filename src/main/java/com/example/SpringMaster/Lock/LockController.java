@@ -37,9 +37,15 @@ public class LockController {
         lockService.createLock(lock);
     }
 
-    // DELETE Lock
+    // DELETE 1 Lock
     @DeleteMapping(path = "delete/{lockId}")
     public void deleteLock(@PathVariable("lockId") long lockId) {
         lockService.deleteLock(lockId);
+    }
+
+    // DELETE ALL Lock
+    @DeleteMapping(path = "deleteAll")
+    public void deleteAllLock() {
+        lockService.deleteAllLock();
     }
 }

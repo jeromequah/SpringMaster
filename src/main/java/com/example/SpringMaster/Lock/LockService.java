@@ -53,4 +53,9 @@ public class LockService {
             lockRepository.deleteById(lockId);
         }
     }
+
+    // DELETE ALL lock
+    public void deleteAllLock() {
+        lockRepository.deleteAll();
+    }
 }
