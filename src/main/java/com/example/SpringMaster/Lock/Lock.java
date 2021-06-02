@@ -44,11 +44,11 @@ public class Lock {
 
     // Assume BluetoothDevice.deviceName for FE
     @NotBlank
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = false)
     private String lockName;
 
     @NotBlank
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = false)
     // Assume BluetoothDevice.deviceAddress
     private String lockMacAddress;
 
