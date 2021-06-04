@@ -75,11 +75,4 @@ public class Usage {
     public Lock getLock() {
         return lock;
     }
-
-    // TODO USAGE = Auto Set Timestamp Upon Creation instead of NULL
-    public void setDatetimeUnlocked(String datetimeUnlocked) {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        this.datetimeUnlocked = now.format(format);
-    }
 }

@@ -77,11 +77,4 @@ public class Auth {
     public Lock getLock() {
         return lock;
     }
-
-    // TODO AUTH - Auto Set Timestamp Upon Creation instead of NULL
-    public void setDatetimeAccepted(String datetimeAccepted) {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        this.datetimeAccepted = now.format(format);
-    }
 }
