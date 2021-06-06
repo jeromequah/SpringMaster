@@ -2,7 +2,9 @@ package com.example.SpringMaster.Lock;
 
 import com.example.SpringMaster.Auth.Auth;
 import com.example.SpringMaster.Usage.Usage;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@JsonIdentityInfo( // Helps serialisation of entities with bidirectional R/S
+        scope = Lock.class,
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 
 public class Lock {
     // Class Properties

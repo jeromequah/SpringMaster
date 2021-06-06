@@ -2,10 +2,7 @@ package com.example.SpringMaster.Admin;
 
 import com.example.SpringMaster.Auth.Auth;
 import com.example.SpringMaster.Usage.Usage;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -29,6 +26,11 @@ import java.util.Set;
 @EqualsAndHashCode
 // @Data used when fields are meant to be final, replaces everything
 // @Entity @Table maps Admin class to H2 DB Table
+@JsonIdentityInfo( // Helps serialisation of entities with bidirectional R/S
+        scope = Admin.class,
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "adminId")
+
 public class Admin {
     // Class properties
 
