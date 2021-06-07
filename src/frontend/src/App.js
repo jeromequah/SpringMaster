@@ -29,6 +29,9 @@ import {
 // AdminDrawerForm
 import AdminDrawerForm from "./AdminDrawerForm";
 
+// LockDrawerForm
+import LockDrawerForm from "./LockDrawerForm";
+
 // Styling
 import './App.css';
 
@@ -36,7 +39,7 @@ import './App.css';
 import {useEffect, useState} from 'react'
 
 // API References
-import {deleteAdmin, getAllAdmin} from "./client";
+import {deleteAdmin, getAllAdmin, getAllLock, deleteLock} from "./client";
 
 // Notifications
 import {errorNotification, successNotification} from "./Notification";
@@ -77,7 +80,23 @@ const removeAdmin = (adminId, callback) => {
     })
 }
 
-const columns = fetchAdmins => [
+const removeLock = (lockId, callback) => {
+    deleteLock(lockId).then(() => {
+        successNotification("Lock Deleted", `Lock with id ${lockId} was deleted`);
+        callback(); // fetchLock called here for table refresh
+    }).catch(err => {
+        console.log(err)
+        err.response.json().then(res => {
+            console.log(res);
+            errorNotification(
+                "Delete Lock Failed!",
+                `${res.message} [${res.status}] [${res.error}]`
+            )
+        })
+    })
+}
+
+const adminColumns = fetchAdmins => [
     {
         title: 'Logo',
         dataIndex: 'avatar',
@@ -133,15 +152,69 @@ const columns = fetchAdmins => [
     }
 ];
 
+const lockColumns = fetchLocks => [
+    {
+        title: 'Lock ID',
+        dataIndex: 'id',
+        key: 'id',
+    },
+    {
+        title: 'Nick Name',
+        dataIndex: 'lockNickName',
+        key: 'lockNickName',
+    },
+    {
+        title: 'Lock Name',
+        dataIndex: 'lockName',
+        key: 'lockName',
+    },
+    {
+        title: 'MAC Address',
+        dataIndex: 'lockMacAddress',
+        key: 'lockMacAddress',
+    },
+    {
+        title: 'UUID',
+        dataIndex: 'lockUUID',
+        key: 'lockUUID',
+    },
+    {
+        title: 'AES Key',
+        dataIndex: 'lockAESKey',
+        key: 'lockAESKey',
+    },
+    {
+        title: 'Password',
+        dataIndex: 'lockPassword',
+        key: 'lockPassword',
+    },
+    {
+        title: 'Actions',
+        key: 'actions',
+        render: (text, lock) =>
+            <Radio.Group>
+                <Popconfirm
+                    placement='topRight'
+                    title={`Are you sure to delete ${lock.lockNickName} ?`}
+                    onConfirm={() => removeLock(lock.id, fetchLocks)}
+                    okText='Yes'
+                    cancelText='No'>
+                    <Radio.Button value="small">Delete</Radio.Button>
+                </Popconfirm>
+                <Radio.Button value="small">Edit</Radio.Button>
+            </Radio.Group>
+    }
+];
+
 const antIcon = <LoadingOutlined style={{fontSize: 24}} spin/>;
 
 // FE Components - the States
 function App() {
     const [admins, setAdmins] = useState([]);
+    const [locks, setLocks] = useState([]);
     const [collapsed, setCollapsed] = useState(false);
     const [fetching, setFetching] = useState(true);
     const [showDrawer, setShowDrawer] = useState(false);
-
 
     const fetchAdmins = () =>
         getAllAdmin()
@@ -159,16 +232,35 @@ function App() {
                 });
             }).finally(() => setFetching(false));
 
+    const fetchLocks = () =>
+        getAllLock()
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setLocks(data)
+                setFetching(false);
+            }).catch(err => {
+                console.log(err.response)
+                err.response.json().then(res => {
+                    console.log(res);
+                    errorNotification("Issue!",
+                        `${res.message} [${res.status}] [${res.error}]`)
+                });
+        }).finally(() => setFetching(false));
+
     useEffect(() => { // Invokes function once
         console.log("Component Mounted")
         fetchAdmins(); // admins variable will contain the array
+    }, []);
+
+    useEffect(() => {
+        fetchLocks();
     }, []);
 
     const renderAdmins = () => {
         if (fetching) {
             return <Spin indicator={antIcon}/>
         }
-
         // Returning Data
         return <>
             <AdminDrawerForm
@@ -178,7 +270,7 @@ function App() {
             />
             <Table
                 dataSource={admins}
-                columns={columns(fetchAdmins)}
+                columns={adminColumns(fetchAdmins)}
                 bordered
                 title={() =>
                     <>
@@ -195,6 +287,40 @@ function App() {
                 pagination={{pageSize: 50}}
                 scroll={{y: 700}}
                 rowKey={(admin) => admin.adminId}
+            />
+        </>
+    }
+
+    const renderLocks = () => {
+        if (fetching) {
+            return <Spin indicator={antIcon}/>
+        }
+        // Returning Data
+        return <>
+            <LockDrawerForm
+                showDrawer={showDrawer}
+                setShowDrawer={setShowDrawer}
+                fetchAdmins = {fetchLocks}
+            />
+            <Table
+                dataSource={locks}
+                columns={lockColumns(fetchLocks)}
+                bordered
+                title={() =>
+                    <>
+                        <Tag color="orange">Number of Locks</Tag>
+                        <Badge count={locks.length} className="site-badge-count-4" />
+                        <br/><br/>
+                        {/*createAdmin Button*/}
+                        <Button
+                            onClick={() => setShowDrawer(!showDrawer)}
+                            type="primary" shape="round" icon={<PlusCircleFilled/>} size="medium">
+                            Add Lock
+                        </Button>
+                    </>}
+                pagination={{pageSize: 50}}
+                scroll={{y: 700}}
+                rowKey={(lock) => lock.id}
             />
         </>
     }
@@ -234,13 +360,16 @@ function App() {
         <Layout className="site-layout">
             <Header className="site-layout-background" style={{padding: 0}}/>
             <Content style={{margin: '0 16px'}}>
-                <Breadcrumb style={{margin: '16px 0'}}>
-                    <Breadcrumb.Item>User</Breadcrumb.Item>
-                    <Breadcrumb.Item>Bill</Breadcrumb.Item>
-                </Breadcrumb>
+                {/*<Breadcrumb style={{margin: '16px 0'}}>*/}
+                {/*    <Breadcrumb.Item>User</Breadcrumb.Item>*/}
+                {/*    <Breadcrumb.Item>Bill</Breadcrumb.Item>*/}
+                {/*</Breadcrumb>*/}
                 {/*Actual Content - Render Table*/}
-                <div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
+                <div className="site-layout-background" style={{padding: 24, minHeight: 300}}>
+                    {/*If Default Select Keys = 1,2,3- Render Accordingly*/}
                     {renderAdmins()}
+                    <br/><br/>
+                    {renderLocks()}
                 </div>
             </Content>
             <Footer style={{textAlign: 'center'}}>
@@ -253,4 +382,5 @@ function App() {
         </Layout>
     </Layout>
 }
+
 export default App;

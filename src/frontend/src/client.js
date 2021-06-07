@@ -30,3 +30,22 @@ export const deleteAdmin = adminId =>
     fetch(`api/v1/admins/delete/${adminId}`, {
         method: 'DELETE'
     }).then(checkStatus);
+
+export const getAllLock = () =>
+    fetch ('api/v1/locks/allLock')
+        .then(checkStatus);
+
+export const createLock = lock =>
+    fetch('api/v1/locks/createLock', {
+        headers:{
+            'Content-Type':'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(lock)
+    })
+        .then(checkStatus);
+
+export const deleteLock = lockId =>
+    fetch(`api/v1/locks/delete/${lockId}`, {
+        method: 'DELETE'
+    }).then(checkStatus);
