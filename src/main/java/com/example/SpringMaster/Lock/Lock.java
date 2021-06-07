@@ -59,8 +59,16 @@ public class Lock {
     private String lockMacAddress;
 
     @NotBlank
-    // Unlocked or Locked
-    private String lockStatus;
+    @Column(nullable = false, unique = false)
+    private String lockUUID;
+
+    @NotBlank
+    @Column(nullable = false, unique = false)
+    private String lockAESKey;
+
+    @NotBlank
+    @Column(nullable = false, unique = false)
+    private String lockPassword;
 
     // TODO R/S USAGE: ONE Lock, MANY Usages
     @OneToMany(mappedBy = "lock", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -89,8 +97,16 @@ public class Lock {
         return lockMacAddress;
     }
 
-    public String getLockStatus() {
-        return lockStatus;
+    public String getLockUUID() {
+        return lockUUID;
+    }
+
+    public String getLockAESKey() {
+        return lockAESKey;
+    }
+
+    public String getLockPassword() {
+        return lockPassword;
     }
 
     public List<Usage> getUsages() {
