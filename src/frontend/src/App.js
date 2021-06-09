@@ -369,7 +369,7 @@ function App() {
                     {/*If Default Select Keys = 1,2,3- Render Accordingly*/}
                     {renderAdmins()}
                     <br/><br/>
-                    {renderLocks()}
+                    {/*{renderLocks()}*/}
                 </div>
             </Content>
             <Footer style={{textAlign: 'center'}}>
